@@ -1,0 +1,29 @@
+// ==UserScript==
+// @name        Simple Stop Redirect
+// @version     0.2
+// @description Prevents redirects and asks for confirmation before opening links
+// @match       *://*/*
+// @grant       none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // Function to handle link clicks
+    function handleLinkClick(event) {
+        const link = event.target.closest('a');
+        if (link && link.href) {
+            event.preventDefault();
+            if (confirm(`Do you want to go to:\n\n${link.href}`)) {
+                window.location.href = link.href;
+            }
+        }
+    }
+
+    // Add click event listener
+    document.addEventListener('click', handleLinkClick, true);
+
+    // Prevent unload without confirmation
+    window.addEventListener('beforeunload', e => e.returnValue = '');
+})();
+

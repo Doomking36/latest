@@ -1,0 +1,15 @@
+// ==UserScript==
+// @name        Minimal Stop Redirect
+// @version     0.3
+// @description Asks for confirmation before opening links
+// @match       *://*/*
+// @grant       none
+// ==/UserScript==
+
+document.addEventListener('click', e => {
+    const link = e.target.closest('a');
+    if (link && !confirm(`Go to:\n${link.href}?`)) {
+        e.preventDefault();
+    }
+}, true);
+
